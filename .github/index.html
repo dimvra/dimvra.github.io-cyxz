@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>次元行者-XP人格分类系统 | DIMVRA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a0b2e, #0d1b3a, #2d1b69);
+            color: #fff;
+            min-height: 100vh;
+            padding: 15px;
+            text-align: center;
+            animation: fadeIn 1.5s ease-out;
+            background-attachment: fixed;
+            line-height: 1.6;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 15px auto;
+            background: rgba(10, 5, 25, 0.7);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ff69b4, #ba55d3, #7b68ee);
+            z-index: 10;
+        }
+        
+        .brand-header {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 105, 180, 0.3);
+        }
+        
+        .brand-logo {
+            font-size: 1.6rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ff69b4, #ba55d3);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
+        }
+        
+        .back-to-store {
+            color: #d0bfff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: color 0.3s;
+        }
+        
+        .back-to-store:hover {
+            color: #ff69b4;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #ff69b4, #ba55d3, #7b68ee);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+            letter-spacing: 1px;
+            line-height: 1.3;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            color: #d0bfff;
+            margin-bottom: 20px;
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .info-box {
+            background: rgba(186, 85, 211, 0.15);
+            border: 1px solid rgba(186, 85, 211, 0.4);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .info-box h3 {
+            color: #ff69b4;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .info-box p {
+            color: #e0d6ff;
+            font-size: 0.95rem;
+        }
+        
+        .id-input-section {
+            background: rgba(186, 85, 211, 0.1);
+            border: 1px solid rgba(186, 85, 211, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .id-input-section h3 {
+            color: #ff69b4;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .id-input {
+            width: 100%;
+            max-width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 105, 180, 0.3);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 12px;
+            outline: none;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .id-input:focus {
+            border-color: #ff69b4;
+            box-shadow: 0 0 15px rgba(255, 0, 128, 0.5);
+        }
+        
+        .id-hint {
+            color: #d0bfff;
+            font-size: 0.85rem;
+            margin-top: 8px;
+        }
+        
+        .start-button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .progress-container {
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            color: #d0bfff;
+            font-size: 0.85rem;
+        }
+        
+        .progress {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff69b4, #ba55d3, #7b68ee);
+            border-radius: 8px;
+            transition: width 0.5s ease-in-out;
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+        }
+        
+        .question {
+            font-size: 1.2rem;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border-left: 5px solid #ff69b4;
+            text-align: left;
+            position: relative;
+            line-height: 1.5;
+        }
+        
+        .question-number {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: rgba(255, 105, 180, 0.2);
+            color: #ff69b4;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .scale {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 15px 0;
+        }
+        
+        .scale button {
+            padding: 12px 10px;
+            background: linear-gradient(to bottom, #3a2a5f, #2d1b4e);
+            color: #fff;
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 50px;
+        }
+        
+        .scale button:hover {
+            background: linear-gradient(to bottom, #4a3a6f, #3d2b5e);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+        }
+        
+        .scale button:active {
+            transform: translateY(1px);
+        }
+        
+        .scale button.selected {
+            background: linear-gradient(to bottom, #ff69b4, #ba55d3);
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+            border-color: #ff69b4;
+        }
+        
+        .button-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            flex: 1;
+            min-height: 50px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #ff69b4, #ba55d3);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #d0bfff;
+            border: 1px solid rgba(255, 105, 180, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+        }
+        
+        #result {
+            display: none;
+            animation: fadeIn 1s;
+        }
+        
+        .result-header {
+            margin-bottom: 20px;
+        }
+        
+        .type-card {
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.1), rgba(186, 85, 211, 0.1));
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .type-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #ff69b4, #ba55d3, #7b68ee);
+        }
+        
+        .type-header {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .type-code {
+            font-size: 1.6rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ff69b4, #ba55d3);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
+        }
+        
+        .type-nickname {
+            font-size: 1.4rem;
+            color: #ffccff;
+            font-weight: bold;
+        }
+        
+        .type-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #e0d6ff;
+            margin-bottom: 15px;
+        }
+        
+        .user-greeting {
+            font-size: 1.2rem;
+            color: #ffccff;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .fun-fact {
+            font-style: italic;
+            color: #ffccff;
+            padding: 12px;
+            background: rgba(255, 105, 180, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid #ff69b4;
+            margin: 15px 0;
+            font-size: 0.95rem;
+        }
+        
+        .dimension-scores {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .dimension {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .dimension-name {
+            font-weight: bold;
+            color: #ffccff;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .dimension-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ff69b4;
+        }
+        
+        .product-recommendation {
+            background: linear-gradient(135deg, rgba(123, 104, 238, 0.1), rgba(186, 85, 211, 0.1));
+            border: 1px solid rgba(123, 104, 238, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .product-recommendation h3 {
+            color: #7b68ee;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .product-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 12px 0;
+            text-align: left;
+            border-left: 4px solid #7b68ee;
+        }
+        
+        .product-name {
+            font-size: 1.1rem;
+            color: #ffccff;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .product-match {
+            color: #d0bfff;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+        
+        .taobao-search {
+            display: inline-block;
+            background: linear-gradient(90deg, #ff69b4, #ba55d3);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin-top: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .taobao-search:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            font-size: 0.85rem;
+        }
+        
+        th {
+            background: linear-gradient(90deg, #ff69b4, #ba55d3);
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: left;
+            color: #e0d6ff;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        tr:hover {
+            background: rgba(255, 105, 180, 0.05);
+        }
+        
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .section-title {
+            font-size: 1.4rem;
+            color: #ffccff;
+            margin: 30px 0 15px;
+            text-align: left;
+            border-bottom: 2px solid rgba(255, 105, 180, 0.3);
+            padding-bottom: 8px;
+        }
+        
+        .site-footer {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #a0a0c0;
+            font-size: 0.85rem;
+        }
+        
+        .share-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        
+        .share-text {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            border-radius: 8px;
+            padding: 12px 15px;
+            color: #e0d6ff;
+            font-size: 0.9rem;
+            text-align: left;
+            word-break: break-all;
+            position: relative;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 105, 180, 0.2);
+            color: #ff69b4;
+            border: 1px solid #ff69b4;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: rgba(255, 105, 180, 0.4);
+        }
+        
+        .share-platforms {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .platform-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px 10px;
+            color: #d0bfff;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-height: 70px;
+        }
+        
+        .platform-btn:hover {
+            background: rgba(255, 105, 180, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .platform-icon {
+            font-size: 1.4rem;
+        }
+        
+        .platform-name {
+            font-size: 0.75rem;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        
+        /* 平板和桌面优化 */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 700px;
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .brand-header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .scale {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            
+            .scale button {
+                flex: 1;
+                min-width: 120px;
+            }
+            
+            .dimension-scores {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .share-platforms {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    <div class="toast" id="toast"></div>
+    
+    <div class="container">
+        <div class="brand-header">
+            <div class="brand-logo">DIMVRA</div>
+            <a href="https://www.dimvra.com" class="back-to-store">
+                <i class="fas fa-store"></i> 返回商店
+            </a>
+        </div>
+        
+        <h1><i class="fas fa-paw"></i> 次元行者-XP人格分类系统</h1>
+        <p class="subtitle">探索你的次元偏好，解锁隐藏在幻想世界中的真实自我！基于福瑞、魔物娘和亚人元素的专业心理测试，带你发现不一样的自己~</p>
+        
+        <div class="info-box">
+            <h3><i class="fas fa-info-circle"></i> 测试说明</h3>
+            <p>本测试包含32个精心设计的问题，通过分析你对动物特征、超自然元素、权力动态和感官体验的偏好，将你的次元人格归类为16种独特类型之一。测试结果仅供参考和娱乐，旨在帮助你更好地了解自己的幻想偏好，发现内心深处的次元小秘密！</p>
+        </div>
+        
+        <div class="id-input-section">
+            <h3><i class="fas fa-user"></i> 创建你的次元身份</h3>
+            <input type="text" class="id-input" id="user-id" placeholder="输入你的昵称或ID" maxlength="20">
+            <p class="id-hint">这个昵称将用于个性化你的测试结果，让分享更有趣！建议使用你常用的网名或角色名~</p>
+            <div class="start-button-container">
+                <button id="start" class="btn btn-primary">
+                    <i class="fas fa-play"></i> 开始测试
+                </button>
+            </div>
+        </div>
+        
+        <div id="quiz" style="display: none;">
+            <div class="progress-container">
+                <div class="progress-info">
+                    <span>测试进度</span>
+                    <span id="progress-text">0/32</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number" id="question-number">1/32</div>
+                <div id="question-text"></div>
+            </div>
+            
+            <div class="scale">
+                <button data-value="1">
+                    <span>强烈反对</span>
+                </button>
+                <button data-value="2">
+                    <span>不同意</span>
+                </button>
+                <button data-value="3">
+                    <span>有点不同意</span>
+                </button>
+                <button data-value="4">
+                    <span>中立</span>
+                </button>
+                <button data-value="5">
+                    <span>有点同意</span>
+                </button>
+                <button data-value="6">
+                    <span>同意</span>
+                </button>
+                <button data-value="7">
+                    <span>强烈同意</span>
+                </button>
+            </div>
+            
+            <div class="button-container">
+                <button id="prev" class="btn btn-secondary" style="display: none;">
+                    <i class="fas fa-arrow-left"></i> 上一题
+                </button>
+                <button id="next" class="btn btn-primary" style="display: none;">
+                    下一题 <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div id="result">
+            <div class="result-header">
+                <h2>你的次元人格类型</h2>
+                <div class="user-greeting" id="user-greeting"></div>
+            </div>
+            
+            <div class="type-card" id="personality-result">
+                <div class="type-header">
+                    <div class="type-code" id="type-code"></div>
+                    <div class="type-nickname" id="type-nickname"></div>
+                </div>
+                <div class="type-description" id="type-description"></div>
+                
+                <div class="fun-fact" id="fun-fact">
+                    <i class="fas fa-lightbulb"></i> <span id="fun-fact-text"></span>
+                </div>
+                
+                <h3>维度分析</h3>
+                <div class="dimension-scores" id="dimension-scores">
+                    <!-- 维度分数将通过JS动态添加 -->
+                </div>
+            </div>
+            
+            <!-- 商品推荐区域 -->
+            <div class="product-recommendation">
+                <h3><i class="fas fa-gift"></i> 你适合的次元行者产品类型（淘宝搜次元行者）</h3>
+                <div id="product-recommendation-content">
+                    <!-- 商品推荐内容将通过JS动态添加 -->
+                </div>
+            </div>
+            
+            <div class="share-container">
+                <h3>分享你的测试结果</h3>
+                <div class="share-text" id="share-text">
+                    <span id="share-content"></span>
+                    <button class="copy-btn" id="copy-text-btn">
+                        <i class="fas fa-copy"></i> 复制
+                    </button>
+                </div>
+                
+                <div class="share-platforms">
+                    <div class="platform-btn" id="share-qq">
+                        <div class="platform-icon"><i class="fab fa-qq"></i></div>
+                        <div class="platform-name">QQ好友</div>
+                    </div>
+                    <div class="platform-btn" id="share-wechat">
+                        <div class="platform-icon"><i class="fab fa-weixin"></i></div>
+                        <div class="platform-name">微信</div>
+                    </div>
+                    <div class="platform-btn" id="share-weibo">
+                        <div class="platform-icon"><i class="fab fa-weibo"></i></div>
+                        <div class="platform-name">微博</div>
+                    </div>
+                    <div class="platform-btn" id="share-link">
+                        <div class="platform-icon"><i class="fas fa-link"></i></div>
+                        <div class="platform-name">复制链接</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="button-container">
+                <button id="restart" class="btn btn-secondary">
+                    <i class="fas fa-redo"></i> 重新测试
+                </button>
+            </div>
+            
+            <h3 class="section-title">所有类型参考</h3>
+            <table id="all-types">
+                <thead>
+                    <tr>
+                        <th>类型代码</th>
+                        <th>昵称</th>
+                        <th>描述</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 表格内容将通过JS动态添加 -->
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="site-footer">
+            <p>© 2023 DIMVRA - 次元行者人格测试 | <a href="https://www.dimvra.com" style="color: #d0bfff;">访问我们的商店</a></p>
+        </div>
+    </div>
+
+    <script>
+        // 问题和类型数据
+        const questions = [
+            // 动物/拟人特征型 (A)
+            { text: "你对角色长着动物耳朵或尾巴会不会觉得特别来劲？", dimension: 'A' },
+            { text: "幻想里，你喜欢对象身上有毛茸茸的皮毛吗？", dimension: 'A' },
+            { text: "亲热时，尾巴或爪子的触感会不会让你更兴奋？", dimension: 'A' },
+            { text: "你有没有幻想过和拟人动物，比如狼人或狐狸人，亲密接触？", dimension: 'A' },
+            { text: "兽耳之类的动物特征，是不是你最爱的视觉刺激？", dimension: 'A' },
+            { text: "你喜欢给角色混搭动物特征，比如猫耳加狐尾？", dimension: 'A' },
+            { text: "你对福瑞那种成人互动感兴趣吗？", dimension: 'A' },
+            { text: "兽化元素会不会让你的幻想更带感？", dimension: 'A' },
+
+            // 怪物/超自然型 (M)
+            { text: "你对触手或其他多出来的肢体，在亲热时用起来感兴趣吗？", dimension: 'M' },
+            { text: "魔物娘那种超强的力量，比如完全压倒你，会不会激发你的想象？", dimension: 'M' },
+            { text: "你喜欢角色有鳞片、翅膀或角这些怪物特征吗？", dimension: 'M' },
+            { text: "故事里，怪物的本能冲动，比如超级强烈的交配欲，会不会吸引你？", dimension: 'M' },
+            { text: "你对人类变怪物的转化主题，有没有特别的癖好？", dimension: 'M' },
+            { text: "你幻想过和吸血鬼或史莱姆女孩之类的怪物互动吗？", dimension: 'M' },
+            { text: "在魔物娘的设定里，多配偶或乱伦元素会不会让你兴奋？", dimension: 'M' },
+            { text: "超自然的体型差异会不会让你更来电？", dimension: 'M' },
+
+            // 权力动态型 (P)
+            { text: "亲热时，你更喜欢当老大指挥，还是听话服从？（赞成=当老大）", dimension: 'P' },
+            { text: "角色扮演里，夸奖或贬低的言语会不会很重要？", dimension: 'P' },
+            { text: "你对绑起来或限制自由的场景感兴趣吗？", dimension: 'P' },
+            { text: "力量不对等，比如怪物碾压人类，会不会让你兴奋？", dimension: 'P' },
+            { text: "你喜欢说还是听荤话？（赞成=说）", dimension: 'P' },
+            { text: "幻想中，被追捕或猎杀的戏码会不会让你心跳加速？", dimension: 'P' },
+            { text: "吼叫或噪音会不会让你的体验更刺激？", dimension: 'P' },
+            { text: "主宰和服从的动态，是不是你的核心癖好？", dimension: 'P' },
+
+            // 感官/身体型 (S)
+            { text: "你对身体改造，比如加尾巴或触手，有没有癖好？", dimension: 'S' },
+            { text: "不同质感，比如毛皮对鳞片的手感，会不会吸引你？", dimension: 'S' },
+            { text: "你喜欢多感官刺激的场景，比如看加摸？", dimension: 'S' },
+            { text: "体型差距，比如巨型魔物娘，是不是你的菜？", dimension: 'S' },
+            { text: "你对口活或特定部位，比如耳朵敏感区，有特别兴趣吗？", dimension: 'S' },
+            { text: "背景音乐或声音会不会让你的兴奋度up up？", dimension: 'S' },
+            { text: "你幻想过涉及体液或史莱姆的感官玩法吗？", dimension: 'S' },
+            { text: "身体质感和感官刺激，是不是你的重点？", dimension: 'S' },
+
+            // 角色扮演型 (R vs D: 高分R为R, 低分D)
+            { text: "你喜欢角色扮演时，假装成拟人动物或怪物吗？", dimension: 'R' },
+            { text: "你没分享过的癖好幻想，涉及哪些次元元素？（赞成=多角色扮演）", dimension: 'R' },
+            { text: "你对特定场景，比如森林追逐戏感兴趣吗？", dimension: 'R' },
+            { text: "角色扮演里，你更爱现实还是纯幻想设定？（赞成=幻想）", dimension: 'R' },
+            { text: "你玩过多人或群组角色扮演吗？", dimension: 'R' },
+            { text: "你的癖好受动漫游戏影响大吗，比如魔物娘任务？", dimension: 'R' },
+            { text: "你对人类变亚人的转化故事感兴趣吗？", dimension: 'R' },
+            { text: "故事剧情在你的幻想里很重要吗？", dimension: 'R' },
+
+            // 强度身份 (C vs E: 高分C为C, 低分E)
+            { text: "你对新癖好探索觉得自信满满吗？", dimension: 'C' },
+            { text: "你喜欢固定癖好还是常换新花样？（赞成=固定自信）", dimension: 'C' },
+            { text: "分享幻想时，你会不会自信地带头聊？", dimension: 'C' },
+            { text: "未知元素会不会让你兴奋还是小心？（赞成=兴奋自信）", dimension: 'C' },
+            { text: "你的癖好偏向稳定还是爱探险？（赞成=稳定）", dimension: 'C' },
+            { text: "你享受主导幻想场景吗？", dimension: 'C' },
+            { text: "换新癖好会不会让你不爽？（不赞成=爱探险）", dimension: 'E' }, // 反向算E
+            { text: "你喜欢试新玩法吗？", dimension: 'E' }
+        ];
+
+        // 优化后的类型名称和描述
+        const types = {
+            'APRC': { nickname: '福瑞霸主', desc: '自信满满的动物老大：超爱拟人动物特征的主宰角色扮演，自信指挥幻想场景，比如狼人大王操控尾巴互动。' },
+            'APRE': { nickname: '兽化冒险者', desc: '爱尝试新花样的兽化冒险者：喜欢动物耳朵尾巴的权力玩法，但总想搞点新花样，比如混搭特征的追逐游戏。' },
+            'APDC': { nickname: '爪子执法者', desc: '直来直去的爪子老手：直接冲动物身体的主宰，比如爪子抓握，不爱搞复杂故事。' },
+            'APDE': { nickname: '尾巴追猎者', desc: '追着尾巴跑的猎手：喜欢尝试新动物特征的权力游戏，比如尾巴敏感区的直球互动，啥都敢试试。' },
+            'ASRC': { nickname: '毛皮诗人', desc: '擅长感官体验的毛皮诗人：自信地玩动物触感的角色扮演，比如毛皮摩擦的故事场景。' },
+            'ASRE': { nickname: '耳朵低语者', desc: '在耳边低语的探险者：喜欢尝试兽耳尾巴的感官角色扮演，爱换质感和故事。' },
+            'ASDC': { nickname: '爪子爱抚者', desc: '擅长爱抚爪子的大师：直接自信地玩动物身体感官，比如爪子毛皮的亲密摸索。' },
+            'ASDE': { nickname: '皮毛漫游者', desc: '在皮毛中漫游的家伙：喜欢尝试新动物质感的直球感官，啥新癖好都敢尝试。' },
+            'MPRC': { nickname: '怪物领主', desc: '自信满满的怪物老大：主宰怪物特征的角色扮演，比如触手统治的故事，自信搞定一切。' },
+            'MPRE': { nickname: '触手寻宝者', desc: '寻找触手宝藏的家伙：喜欢尝试新怪物力量的权力角色扮演，比如翅膀角的换新故事。' },
+            'MPDC': { nickname: '獠牙征服者', desc: '直来直去的獠牙老手：直接冲怪物主宰，比如鳞片压倒，不爱玩花里胡哨的。' },
+            'MPDE': { nickname: '鳞片追寻者', desc: '追寻鳞片的猎手：喜欢尝试新怪物体型的权力动态，直球但啥转化都敢玩。' },
+            'MSRC': { nickname: '黏液诱惑者', desc: '擅长黏液诱惑的诗人：自信地玩怪物感官角色扮演，比如史莱姆触感的故事。' },
+            'MSRE': { nickname: '翅膀梦想家', desc: '拥有翅膀梦想的家伙：喜欢尝试超自然质感的角色扮演，爱怪物本能的换新故事。' },
+            'MSDC': { nickname: '触手大师', desc: '触手大师：直接自信地玩怪物身体感官，比如触手的亲密接触。' },
+            'MSDE': { nickname: '毒液航行者', desc: '在毒液中航行的家伙：喜欢尝试新怪物体液肢体的直球感官，对多种癖好都持开放态度。' }
+        };
+
+        // 商品推荐映射
+        const productRecommendations = {
+            '怪物领主': '魔王玛欧',
+            '翅膀梦想家': '鹰身女妖-哈比',
+            '獠牙征服者': '青蛇坊主-所尼娅',
+            '尾巴追猎者': '秘境灵马-森塔（仿真马吊）',
+            '黏液诱惑者': '星陨之鳞-蜥蜴莉德',
+            '爪子爱抚者': '樱垫月狐-蓝樱（蓝色兽爪）',
+            '皮毛漫游者': '樱垫月狐-蓝樱（蓝色兽爪）',
+            '鳞片追寻者': '粉鳞龙爪1.5代-多格',
+            '毒液航行者': '银鳍守望1.5代-渊海（海豚牛子）',
+            '兽化冒险者': '金缕灵狐-狐狸兽头',
+            '耳朵低语者': '金缕灵狐-狐狸兽头',
+            '毛皮诗人': '牧语灵羊2.0-绒雪（仿真全身羊）',
+            '爪子执法者': '金爪翔隼1.5代-啾啾（仿真鸟爪）',
+            '福瑞霸主': '灰眸媚狼2.0代-月妩（美系狼头）'
+        };
+
+        const funFacts = [
+            "小趣闻：这种类型的人在次元里可能是大王，但现实里说不定只是个爱撸猫的萌新！",
+            "哈哈：想想看，你的类型在动漫里准是主角的隐藏绝招~",
+            "有趣的事：好多名人其实也爱次元，但他们藏着不说！",
+            "小提示：分享你的类型，没准能找到小伙伴，一起组队玩！",
+            "笑点：要是这是游戏，你的类型能解锁隐藏结局哦~"
+        ];
+
+        // 初始化变量
+        let currentQuestion = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        let scores = { A: 0, M: 0, P: 0, S: 0, R: 0, D: 0, C: 0, E: 0 };
+        const dims = ['A', 'M', 'P', 'S', 'R', 'D', 'C', 'E'];
+        dims.forEach(d => scores[d] = 0);
+        let userId = "";
+
+        // 随机打乱问题顺序
+        questions.sort(() => Math.random() - 0.5);
+
+        // 创建粒子背景
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 40;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // 随机大小
+                const size = Math.random() * 4 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // 随机位置
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                
+                // 随机颜色（基于品牌色调）
+                const colors = ['#ff69b4', '#ba55d3', '#7b68ee', '#9370db'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.background = color;
+                particle.style.boxShadow = `0 0 10px ${color}`;
+                
+                // 随机动画延迟和持续时间
+                const delay = Math.random() * 15;
+                const duration = 15 + Math.random() * 15;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // DOM元素
+        const startBtn = document.getElementById('start');
+        const quizSection = document.getElementById('quiz');
+        const resultSection = document.getElementById('result');
+        const userIdInput = document.getElementById('user-id');
+        const userGreeting = document.getElementById('user-greeting');
+        const questionText = document.getElementById('question-text');
+        const questionNumber = document.getElementById('question-number');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const scaleButtons = document.querySelectorAll('.scale button');
+        const prevBtn = document.getElementById('prev');
+        const nextBtn = document.getElementById('next');
+        const typeCode = document.getElementById('type-code');
+        const typeNickname = document.getElementById('type-nickname');
+        const typeDescription = document.getElementById('type-description');
+        const funFactText = document.getElementById('fun-fact-text');
+        const dimensionScores = document.getElementById('dimension-scores');
+        const allTypesTable = document.querySelector('#all-types tbody');
+        const restartBtn = document.getElementById('restart');
+        const shareText = document.getElementById('share-text');
+        const shareContent = document.getElementById('share-content');
+        const copyTextBtn = document.getElementById('copy-text-btn');
+        const shareQq = document.getElementById('share-qq');
+        const shareWechat = document.getElementById('share-wechat');
+        const shareWeibo = document.getElementById('share-weibo');
+        const shareLink = document.getElementById('share-link');
+        const toast = document.getElementById('toast');
+        const productRecommendationContent = document.getElementById('product-recommendation-content');
+        const personalityResult = document.getElementById('personality-result');
+
+        // 显示Toast提示
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // 复制文本到剪贴板
+        function copyToClipboard(text) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast('已复制到剪贴板！');
+                }).catch(err => {
+                    console.error('复制失败:', err);
+                    fallbackCopy(text);
+                });
+            } else {
+                fallbackCopy(text);
+            }
+        }
+
+        // 备用复制方法
+        function fallbackCopy(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                showToast('已复制到剪贴板！');
+            } catch (err) {
+                console.error('备用复制方法失败:', err);
+                showToast('复制失败，请手动复制');
+            }
+            document.body.removeChild(textArea);
+        }
+
+        // 开始测试
+        startBtn.addEventListener('click', () => {
+            userId = userIdInput.value.trim();
+            
+            if (!userId) {
+                showToast('请输入你的昵称或ID');
+                userIdInput.focus();
+                return;
+            }
+            
+            if (userId.length > 20) {
+                showToast('昵称不能超过20个字符');
+                userIdInput.focus();
+                return;
+            }
+            
+            document.querySelector('.id-input-section').style.display = 'none';
+            quizSection.style.display = 'block';
+            showQuestion();
+            createParticles();
+        });
+
+        // 显示当前问题
+        function showQuestion() {
+            questionText.textContent = questions[currentQuestion].text;
+            questionNumber.textContent = `${currentQuestion + 1}/${questions.length}`;
+            
+            // 更新进度条
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+            
+            // 更新按钮状态
+            prevBtn.style.display = currentQuestion > 0 ? 'flex' : 'none';
+            nextBtn.style.display = userAnswers[currentQuestion] !== null ? 'flex' : 'none';
+            
+            // 重置按钮选中状态
+            scaleButtons.forEach(btn => {
+                btn.classList.remove('selected');
+                if (parseInt(btn.dataset.value) === userAnswers[currentQuestion]) {
+                    btn.classList.add('selected');
+                }
+            });
+        }
+
+        // 选择答案
+        scaleButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const value = parseInt(e.currentTarget.dataset.value);
+                userAnswers[currentQuestion] = value;
+                
+                // 更新按钮选中状态
+                scaleButtons.forEach(b => b.classList.remove('selected'));
+                e.currentTarget.classList.add('selected');
+                
+                // 显示下一题按钮
+                nextBtn.style.display = 'flex';
+            });
+        });
+
+        // 上一题
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+            }
+        });
+
+        // 下一题
+        nextBtn.addEventListener('click', () => {
+            if (userAnswers[currentQuestion] === null) {
+                alert('请先选择答案');
+                return;
+            }
+            
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion();
+            } else {
+                calculateResult();
+            }
+        });
+
+        // 计算结果
+        function calculateResult() {
+            // 重置分数
+            dims.forEach(d => scores[d] = 0);
+            
+            // 计算每个维度的总分
+            for (let i = 0; i < questions.length; i++) {
+                const dimension = questions[i].dimension;
+                scores[dimension] += userAnswers[i];
+            }
+            
+            // 计算类型
+            const normalize = (score) => score / (4 * 7) * 100; // 每个维度4个问题，最大值7
+            
+            const entity = normalize(scores.A) > normalize(scores.M) ? 'A' : 'M';
+            const dynamic = normalize(scores.P) > normalize(scores.S) ? 'P' : 'S';
+            const interaction = normalize(scores.R) > normalize(scores.D) ? 'R' : 'D';
+            const intensity = normalize(scores.C) > normalize(scores.E) ? 'C' : 'E';
+            const code = `${entity}${dynamic}${interaction}${intensity}`;
+            
+            // 显示结果
+            showResult(code);
+        }
+
+        // 显示结果
+        function showResult(code) {
+            quizSection.style.display = 'none';
+            resultSection.style.display = 'block';
+            
+            const typeInfo = types[code] || { nickname: '神秘游侠', desc: '类型不明？说不定你是次元里的隐藏大佬！再测一次试试~' };
+            
+            // 设置用户问候语
+            userGreeting.textContent = `亲爱的 ${userId}，你的次元人格类型是：`;
+            
+            typeCode.textContent = code;
+            typeNickname.textContent = typeInfo.nickname;
+            typeDescription.textContent = typeInfo.desc;
+            funFactText.textContent = funFacts[Math.floor(Math.random() * funFacts.length)];
+            
+            // 设置分享文本
+            const fullType = `${code} - ${typeInfo.nickname}`;
+            const shareTextContent = `我是${userId}，我的DIMVRA次元人格类型是 ${fullType}！快来发现你的次元人格吧~ ${window.location.href}`;
+            shareContent.textContent = shareTextContent;
+            
+            // 显示维度分数
+            dimensionScores.innerHTML = '';
+            dims.forEach(dim => {
+                const percentage = (scores[dim] / (4 * 7)) * 100;
+                const dimensionEl = document.createElement('div');
+                dimensionEl.className = 'dimension';
+                dimensionEl.innerHTML = `
+                    <div class="dimension-name">${getDimensionName(dim)}</div>
+                    <div class="dimension-value">${Math.round(percentage)}%</div>
+                `;
+                dimensionScores.appendChild(dimensionEl);
+            });
+            
+            // 显示商品推荐
+            showProductRecommendation(typeInfo.nickname);
+            
+            // 显示所有类型表格
+            allTypesTable.innerHTML = '';
+            Object.keys(types).forEach(key => {
+                const row = document.createElement('tr');
+                if (key === code) {
+                    row.style.background = 'rgba(255, 105, 180, 0.1)';
+                }
+                row.innerHTML = `
+                    <td>${key}</td>
+                    <td>${types[key].nickname}</td>
+                    <td>${types[key].desc}</td>
+                `;
+                allTypesTable.appendChild(row);
+            });
+            
+            // 滚动到人格类型结果区域
+            setTimeout(() => {
+                personalityResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 300);
+        }
+
+        // 显示商品推荐
+        function showProductRecommendation(typeNickname) {
+            const productName = productRecommendations[typeNickname];
+            
+            if (productName) {
+                productRecommendationContent.innerHTML = `
+                    <div class="product-card">
+                        <div class="product-name">${productName}</div>
+                        <div class="product-match">与你的"${typeNickname}"人格完美匹配！</div>
+                        <a href="https://s.taobao.com/search?q=次元行者+${encodeURIComponent(productName)}" target="_blank" class="taobao-search">
+                            <i class="fas fa-shopping-cart"></i> 淘宝搜索"次元行者 ${productName}"
+                        </a>
+                    </div>
+                `;
+            } else {
+                productRecommendationContent.innerHTML = `
+                    <div class="product-card">
+                        <div class="product-name">次元行者系列产品</div>
+                        <div class="product-match">你的"${typeNickname}"人格可以尝试多种次元行者产品！</div>
+                        <a href="https://s.taobao.com/search?q=次元行者" target="_blank" class="taobao-search">
+                            <i class="fas fa-shopping-cart"></i> 淘宝搜索"次元行者"
+                        </a>
+                    </div>
+                `;
+            }
+        }
+
+        // 获取维度名称
+        function getDimensionName(dim) {
+            const names = {
+                'A': '动物特征',
+                'M': '超自然',
+                'P': '权力动态',
+                'S': '感官体验',
+                'R': '角色扮演',
+                'D': '直接行动',
+                'C': '自信稳定',
+                'E': '探索变化'
+            };
+            return names[dim] || dim;
+        }
+
+        // 分享功能
+        copyTextBtn.addEventListener('click', () => {
+            const textToCopy = shareContent.textContent;
+            copyToClipboard(textToCopy);
+        });
+
+        // QQ分享
+        shareQq.addEventListener('click', () => {
+            const text = `我是${userId}，我的DIMVRA次元人格类型是 ${typeCode.textContent} - ${typeNickname.textContent}！快来发现你的次元人格吧~`;
+            const url = window.location.href;
+            const shareUrl = `https://connect.qq.com/widget/shareqq/index.html?url=${encodeURIComponent(url)}&title=${encodeURIComponent(text)}`;
+            window.open(shareUrl, '_blank', 'width=615,height=530');
+        });
+
+        // 微信分享
+        shareWechat.addEventListener('click', () => {
+            showToast('请使用微信扫描二维码分享');
+            // 在实际应用中，这里可以生成二维码
+        });
+
+        // 微博分享
+        shareWeibo.addEventListener('click', () => {
+            const text = `我是${userId}，我的DIMVRA次元人格类型是 ${typeCode.textContent} - ${typeNickname.textContent}！快来发现你的次元人格吧~`;
+            const url = window.location.href;
+            const shareUrl = `https://service.weibo.com/share/share.php?url=${encodeURIComponent(url)}&title=${encodeURIComponent(text)}`;
+            window.open(shareUrl, '_blank', 'width=615,height=530');
+        });
+
+        // 复制链接
+        shareLink.addEventListener('click', () => {
+            copyToClipboard(window.location.href);
+        });
+
+        // 重新测试
+        restartBtn.addEventListener('click', () => {
+            // 重置所有状态
+            currentQuestion = 0;
+            userAnswers = new Array(questions.length).fill(null);
+            dims.forEach(d => scores[d] = 0);
+            userId = "";
+            userIdInput.value = "";
+            
+            // 重新打乱问题
+            questions.sort(() => Math.random() - 0.5);
+            
+            // 显示开始界面
+            resultSection.style.display = 'none';
+            document.querySelector('.id-input-section').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
